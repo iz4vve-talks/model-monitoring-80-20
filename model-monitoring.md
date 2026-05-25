@@ -24,6 +24,13 @@ math: mathjax
 }
 </style>
 
+<style>
+.large-center {
+  font-size: 2em;
+  text-align: center;
+}
+</style>
+
 <!-- Intro Slide -->
 <!-- _paginate: skip -->
 
@@ -276,7 +283,28 @@ results = report.as_dict()
 
 ---
 
+<style scoped>
+h1 {
+  color: white;
+}
+</style>
+
 # 2. Training–Serving Skew
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+![center bg](./imgs/archfail.jpg)
 
 ---
 
@@ -405,6 +433,20 @@ assert train_pipeline_hash == serving_pipeline_hash
 
 ## 3. Feature Staleness
 
+&nbsp;
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+![bg ](./imgs/olddata2.webp)
+
 ---
 
 ## Feature staleness: what causes it
@@ -422,6 +464,7 @@ Common causes (unrelated to data drift):
 ---
 
 ## Feature Staleness: Practical Detection
+
 Rule-based freshness check
 
 ```python
@@ -446,7 +489,31 @@ if stale_ratio > 0.1:
 
 ---
 
+<style scoped>
+h1 {
+  color: #362f87;
+}
+</style>
+
 # 4. Performance Degradation
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+![bg 100%](./imgs/performancedegradation.webp)
 
 
 ---
@@ -498,6 +565,24 @@ if current_auc < baseline_auc - 0.05:
 
 ## 5. Data Quality & Pipeline Integrity
 
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+![center bg contain](./imgs/datapipeline.png)
+
+<p class="small-center">Source: https://xkcd.com/2054/</p>
+
 ---
 
 ## Typical issues
@@ -540,61 +625,15 @@ schema.validate(df)
 
 <!-- Explain that data quality issues often masquerade as “model issues” but are unrelated to ML. This is the foundation layer of monitoring. -->
 
----
 
-## A Minimal But Robust Python Monitoring Stack
-
-You only need:
-
-Evidently → drift & data quality
-River → online drift detectors
-MLflow → performance + metric logging
-FastAPI → monitoring endpoints / orchestration
-Airflow / cron → run periodic checks
-Object storage → baselines, stats, history
-
-This stack is enough for most real applications.
-
-[Placeholder: architecture diagram]
 
 <!-- Stress that the power comes from simplicity and control. Large MLOps platforms often obscure what’s going on — bad for debugging. -->
-Reference Architecture
-
-[Placeholder: more detailed block diagram]
 
 ---
 
-## Flow:
+## Flow
 
-```mermaid
-flowchart TD
-A[Raw Data Ingestion] --> B[Schema Validation]
-B --> C[Feature Engineering]
-C --> D[Model Inference]
-D --> E[Prediction Logging]
-
-A --> F[Data Quality Checks]
-C --> G[Feature Freshness Checks]
-D --> H[Drift Detection]
-D --> I[Performance Monitoring]
-
-F --> J[Alerting Layer]
-G --> J
-H --> J
-I --> J
-```
-<!-- 
-Batch ingestion
-Data checks
-Feature store
-Online prediction
-Drift + freshness checks
-Metric logging
-Alerts + dashboards -->
-<!-- Highlight separation of concerns: Monitoring is not tied to model hosting. It should survive model replacement. -->
-
-<!-- Stress that the point is the *workflow*, not the exact code. Show how checks are atomic and composable. Encourage attendees to treat each signal as a small orthogonal unit. -->
-
+![height:500px center](./imgs/architecture.png)
 
 ---
 
@@ -645,23 +684,32 @@ Keep the system smaller than your ability to understand it -->
 ❌ Hard-coded thresholds
 ❌ One-shot evaluations
 
-Fix the root, not the symptoms.
-
-[Placeholder: “alert fatigue” cartoon]
-
 <!-- Deliver this slide with blunt clarity. Every advanced team has suffered these issues. You’re showing them how to skip the first two years of mistakes. -->
+
+---
+
+## Useful tools
+
+Great expectations → Data quality 
+Evidently → drift & data quality
+River → online drift detectors
+MLflow → performance + metric logging
+FastAPI → monitoring endpoints / orchestration
+Airflow / cron → run periodic checks
+
+
 ---
 
 ## What You Can Do This Week
 
-Add drift detection to one model
-Add freshness checks to your critical features
-Align training & serving preprocessing
-Introduce baselines for data quality tests
-Stand up a simple monitoring API
-Create a single “model health” page
+- Add drift detection to one model
+- Add freshness checks to your critical features
+- Align training & serving preprocessing
+- Introduce baselines for data quality tests
+- Stand up a simple monitoring API
+- Create a single “model health” page
 
-Small wins compound.
+<p class="large-center">Small wins compound.</p>
 
 <!-- Give them achievable actions. The goal is to convert the talk into momentum. -->
 
@@ -672,7 +720,7 @@ Small wins compound.
 ![bg](./imgs/thanks.jpg)
 
 > ## Any questions?
- 
+
 &nbsp;
 &nbsp;
 &nbsp;
