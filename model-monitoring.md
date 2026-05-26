@@ -711,7 +711,6 @@ Airflow / cron → run periodic checks
 
 <p class="large-center">Small wins compound.</p>
 
-<!-- Give them achievable actions. The goal is to convert the talk into momentum. -->
 
 ---
 
@@ -730,5 +729,3 @@ Airflow / cron → run periodic checks
 &nbsp;
 &nbsp;
 &nbsp;
-
-<!-- Invite advanced questions. Encourage scenario-based discussion. -->
