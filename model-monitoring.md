@@ -38,7 +38,7 @@ math: mathjax
 
 ##### Pietro Mascolo
 
-###### Bologna, 2026-05-28
+###### Dublin, 2026-11-21
 
 &nbsp;
 &nbsp;
@@ -57,8 +57,8 @@ math: mathjax
 
 ## What We’ll Cover
 
-- Why ML monitoring
-- Failure signals that matter
+- Why monitoring
+- Failure signals
 - A lean and robust monitoring architecture
 - Python-first tools
 - Deep dive: drift, skew, freshness, quality, degradation
@@ -68,12 +68,25 @@ math: mathjax
 
 ---
 
+# A word about me
+
+👤 Pietro
+🇧🇷 🇮🇹 🇮🇪 🇮🇳
+👪 Husband and dad.
+💼 Pragmatic Data Scientist.
+💻 Passionate about applied AI, Python, and Go.
+🥋 📷 📻 🥾🏍️
+📫 @iz4vve
+
+---
+
 ## Why This Talk Exists
 
 The traditional approach:
 
 - log predictions
 - build pretty dashboards (that no one will ever use fully)
+- look at some hastily drawn KPIs (sometimes)
 - pray nothing breaks
 
 <!-- But real systems fail due to distributional instability, not exceptions. -->
@@ -86,20 +99,17 @@ The traditional approach:
 
 ---
 
-# Why Traditional Monitoring Fails for ML
-
-ML changes because the world changes.
-
+# Traditional Monitoring approaches fail
 
 ---
 
-# Traditional monitoring - assumptions
+![bg ](./imgs/assumptions.jpg)
 
 ---
 
 ## Stable requirements
 
-![bg right:70%](./imgs/stability.png)
+![bg right:69%](./imgs/stability.png)
 
 ---
 
@@ -283,17 +293,19 @@ results = report.as_dict()
 
 ---
 
+# 2. Training–Serving Skew
+
+
+---
+
 <style scoped>
-h1 {
+h2 {
   color: white;
 }
 </style>
 
-# 2. Training–Serving Skew
+## Often a design issue...
 
-&nbsp;
-&nbsp;
-&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;
@@ -432,6 +444,10 @@ assert train_pipeline_hash == serving_pipeline_hash
 ---
 
 ## 3. Feature Staleness
+
+---
+
+## What you get when Data gets old...
 
 &nbsp;
 
@@ -716,7 +732,7 @@ Airflow / cron → run periodic checks
 
 ## Q&A
 
-![bg](./imgs/thanks.jpg)
+
 
 > ## Any questions?
 
@@ -729,3 +745,45 @@ Airflow / cron → run periodic checks
 &nbsp;
 &nbsp;
 &nbsp;
+
+
+---
+
+<style scoped>
+p {
+  color: #e4e2f5;
+  text-align: right;
+}
+</style>
+
+<style scoped>
+h1 {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  color: #00ff66; /* bright green */
+  background: #000000;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #00ff66;
+  border-radius: 0.25rem;
+  display: inline-block;
+  letter-spacing: 0.04em;
+  font-size:1.9rem;
+  text-shadow: 0 0 8px rgba(0, 255, 102, 0.5);
+  box-shadow: inset 0 0 12px rgba(0, 255, 102, 0.1);
+}
+</style>
+
+# >>> "Thanks for your attention!"  
+
+# >>>  "Happy coding!"
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+Pietro @iz4vve
+http://bit.ly/4dfU5lf
+
+<!-- ![bg](./imgs/thanks.jpg) -->
