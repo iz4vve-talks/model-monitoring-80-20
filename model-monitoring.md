@@ -706,12 +706,12 @@ Keep the system smaller than your ability to understand it -->
 
 ## Useful tools
 
-Great expectations → Data quality 
-Evidently → drift & data quality
-River → online drift detectors
-MLflow → performance + metric logging
-FastAPI → monitoring endpoints / orchestration
-Airflow / cron → run periodic checks
+![h:30px](imgs/great_expectations.png) &nbsp; Great expectations → Data quality 
+![h:30px](imgs/evidently.png) &nbsp; &nbsp; &nbsp;  Evidently → drift & data quality
+![h:30px](imgs/river.png) &nbsp; &nbsp; &nbsp; River → online drift detectors
+![h:30px](imgs/mlflow2.jpg) &nbsp; &nbsp;MLflow → performance + metric logging
+![h:30px](imgs/fastapi.png) &nbsp; &nbsp; &nbsp; FastAPI → monitoring endpoints / orchestration
+![h:30px](imgs/airflow.png)&nbsp; &nbsp; &nbsp;  Airflow / cron → run periodic checks
 
 
 ---
