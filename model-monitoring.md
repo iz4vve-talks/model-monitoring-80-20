@@ -732,10 +732,6 @@ Airflow / cron → run periodic checks
 
 ## Q&A
 
-
-
-> ## Any questions?
-
 &nbsp;
 &nbsp;
 &nbsp;
@@ -746,6 +742,7 @@ Airflow / cron → run periodic checks
 &nbsp;
 &nbsp;
 
+![bg right:63%](./imgs/questions2.png)
 
 ---
 
