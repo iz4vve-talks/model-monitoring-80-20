@@ -34,7 +34,7 @@ math: mathjax
 <!-- Intro Slide -->
 <!-- _paginate: skip -->
 
-## The 80/20 of ML Monitoring
+# The 80/20 of ML Monitoring
 
 ##### Pietro Mascolo
 
@@ -44,7 +44,7 @@ math: mathjax
 &nbsp;
 &nbsp;
 &nbsp;
-![bg right:47%](./imgs/camera2.png)
+![bg](./imgs/camera2.png)
 
 
 > What Actually Matters in ML Systems
@@ -74,15 +74,13 @@ math: mathjax
 🇧🇷 🇮🇹 🇮🇪 🇮🇳
 👪 Husband and dad.
 💼 Pragmatic Data Scientist.
-💻 Passionate about applied AI, Python, and Go.
+💻 Passionate about applied AI, Python, Go, and many nerdy things.
 🥋 📷 📻 🥾🏍️
-📫 @iz4vve
+📫 `@iz4vve`
 
 ---
 
-## Why This Talk Exists
-
-The traditional approach:
+## The traditional approach:
 
 - log predictions
 - build pretty dashboards (that no one will ever use fully)
@@ -91,24 +89,26 @@ The traditional approach:
 
 <!-- But real systems fail due to distributional instability, not exceptions. -->
 
-<!-- Goal: Show the minimal set of signals that predict >80% of real failures, and the architecture that supports them.
-
-[Placeholder: iceberg diagram (“visible failures” vs “invisible drift”)] -->
-
 <!-- Explain the empirical reality: the majority of ML production failures come from data issues and unnoticed drift. Most teams dramatically overestimate what dashboards catch and underestimate pipeline rot. Set expectation: this talk prioritizes conceptual rigor over tooling worship. -->
 
 ---
 
-# Traditional Monitoring approaches fail
+# The real world
+
+* if it can go wrong, it will.
+* If it can't go wrong, it will anyway.
 
 ---
 
+<!-- 
+Traditional monitoring works under some very stringent assumptions that rarely hold true in today's world. -->
 ![bg ](./imgs/assumptions.jpg)
 
 ---
 
 ## Stable requirements
-
+<!-- 
+We expect that the odel owners really understand their requirements and needs and that those are set in stone. -->
 ![bg right:69%](./imgs/stability.png)
 
 ---
@@ -117,15 +117,23 @@ The traditional approach:
 
 ![bg right:69%](./imgs/deterministic2.png)
 
+<!-- We expect simple logic that can lead to building rules and linear understanding.
+This is especially untrue if you deal with non-deterministic domains, like people behaviour.
+ -->
+
 ---
 
 ## Static invariants
 
 ![bg right:69%](./imgs/zen.jpg)
+<!-- 
+We expect the world to stay largely the same, only very slow changes over time and no abrupt variations in behaviour or boundary conditions. -->
 
 ---
 
-# The real world of ML
+# The real world...
+<!-- 
+These expectations are, of course, not much more than wishful thinking. The real world is messy at best, chaotic at worst. -->
 
 ---
 
@@ -145,33 +153,12 @@ The traditional approach:
 
 ![bg  right:70%](./imgs/uncertainty.webp)
 
-<!-- Different rules, different failure modes.
 
-[Placeholder: dataset shifting timeline] -->
-
-<!-- Give an example: fraud models degrade because fraudsters adapt, not because code breaks. Monitoring ML is not about uptime — it’s about epistemic uncertainty. -->
+<!-- Example: fraud models degrade because fraudsters adapt, not because code breaks. Monitoring ML is not about uptime — it’s about epistemic uncertainty. -->
 
 ---
 
-## What fails
-
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-
-It’s rarely the model...
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-
----
-
-## What fails
+## It’s rarely the model...
 
 * data pipeline schema drift
 * training-serving mismatch
@@ -181,6 +168,8 @@ It’s rarely the model...
 * misaligned evaluation
 * feedback loop instability
 
+<!-- The usual suspects when it comes to failure include human error: data pipelines are wrong, incomplete, or out of sync, features evolve and wedon't keep pace, things change, data quality issues, ... -->
+
 ---
 
 ## You need a plan
@@ -189,11 +178,25 @@ It’s rarely the model...
 
 <p class="small-center">Source: https://xkcd.com/1739/</p>
 
-<!-- Lean into the “data-centric” message: Monitoring models is downstream — catching issues after impact. Monitoring data lets you catch issues before predictions degrade. -->
+<!-- 
+If you don't want to generate an even bigger mess, you need to plan before you start doing anything. You don't want to be the one that generates the new spaghetti-ML-monitoring paradigm.
+Lean into the “data-centric” message: Monitoring models is downstream — catching issues after impact. Monitoring data lets you catch issues before predictions degrade. -->
 
 ---
 
-# The Signals That Matter
+# Where to focus?
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+![bg](imgs/magglass.png)
 
 ---
 
@@ -245,38 +248,36 @@ Even small shifts can have multiplicative downstream effects. -->
 
 ![height:500px center ](./imgs/conceptdrift.png)
 
+<!-- P(Y|X) changes. your posterior is not the same. 
+It's the relationship between the covariates that 
+changes.
+
+Example: fraudsters change type of fraud pattern: instead of large sums at odd hours of the day they ove to small multiple transactions regardless of the hour.
+-->
 ---
 
 ## 1. Data Drift: feature/label drift
 
 ![height:500px center ](./imgs/datadrift.jpeg)
 
+<!-- P(X) or P(Y) changes.  One of the covariates changes. 
+
+Example in fraud detection: same types of fraudolent behaviour, but all of a sudden contactless payment frequency goes up by 5%
+-->
 ---
 
 ## 1. Data Drift: how it can appear
 
 ![height:500px center ](./imgs/drifttypes.webp)
 
-<!-- &nbsp;
-
-Covariate drift (feature distributions shift)
-Prior drift (class frequencies shift) -->
-
-<!-- Aspect	Concept Drift	Covariate Drift
-Change in	The relationship between input (X) and output (Y)	The distribution of input features (X)
-Output Behavior	For the same input, the expected output may change over time	Output behavior remains the same, only input patterns change
-Model Impact	Directly affects model accuracy due to outdated learned relationships	May affect model generalization if unseen input patterns dominate
-Adaptation Strategy	Retrain the model using new data reflecting the changed relationship	Ensure training data covers a representative input distribution -->
-
-<!-- ### Tools & signals:
+<!-- 
+Drift can present itself in many different ways:
 
 KL divergence, PSI, KS test
 Embedding drift (advanced)
 Statistical consistency checks
 
-[Placeholder: distribution comparison diagram] -->
-
-<!-- Highlight the limitations of simple metrics like PSI, and suggest monitoring multiple drift signals. Advanced teams use representation models for multimodal or high-dimensional drift detection. -->
+Highlight the limitations of simple metrics like PSI, and suggest monitoring multiple drift signals. Advanced teams use representation models for multimodal or high-dimensional drift detection. -->
 
 ---
 
@@ -290,6 +291,11 @@ report = Report(metrics=[DataDriftPreset()])
 report.run(reference_data=train_df, current_data=prod_df)
 results = report.as_dict()
 ```
+
+---
+## Drift Check - Evidently report
+
+![center height:500px](./imgs/driftreport.png)
 
 ---
 
@@ -339,17 +345,13 @@ h2 {
 - Silent schema changes
 - Code inconsistencies
 
----
 
-## Training–Serving Skew: goal
-
-> ##### Make both environments deterministic and aligned.
 
 <!-- Speaker Notes
-This slide introduces the problem in plain terms: the model saw one world during training and a different one during inference. Juniors often miss that preprocessing mismatch is responsible for most “my model sucks in prod” complaints. Emphasize that alignment is a systems problem, not a modeling problem. -->
+the model saw one world during training and a different one during inference. Juniors often miss that preprocessing mismatch is responsible for most “my model sucks in prod” complaints. Emphasize that alignment is a systems problem, not a modeling problem.
 
-
-<!-- Emphasize: this is the failure mode that embarrasses teams. Most skew happens because feature engineering is duplicated instead of centralized. -->
+Make both environments deterministic and aligned.
+ -->
 
 ---
 
@@ -373,6 +375,8 @@ income_log = math.log(user.income) # missing +1 handling
 age_bucket = round(user.age / 10) * 10 # different logic
 income = user.income if user.income else 0
 ```
+<!-- 
+Make sure your logic and code are the same across environments (ideally even use the same module) -->
 
 ---
 
@@ -395,7 +399,7 @@ def impute(value):
     return value or TRAIN _MEAN
 ```
 
----
+<!-- ---
 
 ```python
 # test_features.py
@@ -410,7 +414,9 @@ def test_income_log_properties(x):
     assert y >= 0
     assert isinstance(y, float)
     assert income_log(x + 1) >= y  # monotonicity
-```
+``` -->
+
+<!-- Test for results and properties using randomised tests as well as deterministic ones. Find and deal with edge cases. -->
 
 ---
 
@@ -450,7 +456,6 @@ assert train_pipeline_hash == serving_pipeline_hash
 ## What you get when Data gets old...
 
 &nbsp;
-
 &nbsp;
 &nbsp;
 &nbsp;
@@ -462,6 +467,8 @@ assert train_pipeline_hash == serving_pipeline_hash
 &nbsp;
 
 ![bg ](./imgs/olddata2.webp)
+
+<!-- Happens when your Data gets old... -->
 
 ---
 
@@ -477,7 +484,7 @@ Common causes (unrelated to data drift):
 - API data lag
 - silent ingestion failures
 
----
+<!-- ---
 
 ## Feature Staleness: Practical Detection
 
@@ -499,9 +506,9 @@ stale_ratio = len(stale_features) / len(df)
 # trigger
 if stale_ratio > 0.1:
     raise Warning("Feature freshness degraded")
-```
+``` -->
 
-<!-- Make clear: freshness monitoring is the least glamorous but the most ROI. Most production failures in industry tie back to stale or lagged features. -->
+<!-- Simplistic check: what matters is ensuring the data you are using is recent enough for your purposes. -->
 
 ---
 
@@ -541,13 +548,12 @@ Causes:
 - real-world behavior shift
 - upstream feature corruption
 - label distribution changes
-- feedback loops
 - seasonal effects
 - direct evaluation may be impossible
 - proxies may misrepresent ground truth
 - multi-objective systems degrade unevenly
 
-By the time performance drops, the root cause already happened upstream.
+<!-- By the time performance drops, the root cause already happened upstream. -->
 
 ---
 
@@ -575,7 +581,7 @@ if current_auc < baseline_auc - 0.05:
     alert("Performance degradation detected")
 ```
 
-<!-- Stress that performance monitoring is downstream. It’s necessary but not sufficient — without upstream monitoring, it’s too late. -->
+<!-- Monitor performance over time consistently. Do not just chewck every few months. -->
 
 ---
 
@@ -599,6 +605,8 @@ if current_auc < baseline_auc - 0.05:
 
 <p class="small-center">Source: https://xkcd.com/2054/</p>
 
+<!-- Don't just put together things with scotch tape and hopes. Make sure your architecture is well thought out, tested, documented, and robust. -->
+
 ---
 
 ## Typical issues
@@ -619,6 +627,7 @@ If data is wrong, model evaluation is meaningless.
 
 ![height:500px center](./imgs/dataquality.png)
 
+<!-- Ensure data quality checks are run at any point in which something might fail. Check along mkultiple dimensions: wrong data doesn't always look wrong... -->
 
 ---
 
@@ -639,17 +648,19 @@ schema.validate(df)
 ```
 
 
-<!-- Explain that data quality issues often masquerade as “model issues” but are unrelated to ML. This is the foundation layer of monitoring. -->
+<!-- data quality issues often masquerade as “model issues” but are unrelated 
 
-
-
-<!-- Stress that the power comes from simplicity and control. Large MLOps platforms often obscure what’s going on — bad for debugging. -->
+ power comes from simplicity and control. Large MLOps platforms often obscure what’s going on — bad for debugging.
+ 
+ Alternative tools: great expectations -->
 
 ---
 
 ## Flow
 
 ![height:500px center](./imgs/architecture.png)
+<!-- 
+Flow of checks and monitoring. Checks for DQ can be at ANY stage (and ideally, every one). -->
 
 ---
 
@@ -700,7 +711,7 @@ Keep the system smaller than your ability to understand it -->
 ❌ Hard-coded thresholds
 ❌ One-shot evaluations
 
-<!-- Deliver this slide with blunt clarity. Every advanced team has suffered these issues. You’re showing them how to skip the first two years of mistakes. -->
+<!-- Avoid these, save yourselves months of pain -->
 
 ---
 
@@ -712,6 +723,7 @@ Keep the system smaller than your ability to understand it -->
 ![h:30px](imgs/mlflow2.jpg) &nbsp; &nbsp;MLflow → performance + metric logging
 ![h:30px](imgs/fastapi.png) &nbsp; &nbsp; &nbsp; FastAPI → monitoring endpoints / orchestration
 ![h:30px](imgs/airflow.png)&nbsp; &nbsp; &nbsp;  Airflow / cron → run periodic checks
+Pylint, Pandera, Pyarrow, Pydantic, ... → typing,  structure, and schema validation
 
 
 ---
@@ -725,7 +737,7 @@ Keep the system smaller than your ability to understand it -->
 - Stand up a simple monitoring API
 - Create a single “model health” page
 
-<p class="large-center">Small wins compound.</p>
+<!-- <p class="large-center">Small wins compound.</p> -->
 
 
 ---
@@ -778,9 +790,8 @@ h1 {
 &nbsp;
 &nbsp;
 &nbsp;
-&nbsp;
 
-Pietro @iz4vve
+Pietro - @iz4vve
 http://bit.ly/4dfU5lf
 
 <!-- ![bg](./imgs/thanks.jpg) -->
